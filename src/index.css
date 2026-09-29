@@ -2,6 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* -------------------------------------------------------------------------
+   * 1. BRAND COLORS (Raw hex references + RGB channels for Tailwind opacity)
+   * ------------------------------------------------------------------------- */
+  /* Structural Steel: deep framing, dark sections, high-contrast text */
+  --color-steel-950: #101317;
+  --color-steel-900: #181b20;
+  --color-steel-800: #22272e;
+  --color-steel-700: #2d333b;
+  --color-steel-600: #373e47;
+  --steel-950-rgb: 16 19 23;
+  --steel-900-rgb: 24 27 32;
+  --steel-800-rgb: 34 39 46;
+  --steel-700-rgb: 45 51 59;
+  --steel-600-rgb: 55 62 71;
+
+  /* Cast Concrete: warm architectural stone canvas */
+  --color-concrete-light: #faf9f6;
+  --color-concrete: #f3f2ee;
+  --color-concrete-mid: #e5e3dc;
+  --color-concrete-dark: #d6d3c8;
+  --concrete-light-rgb: 250 249 246;
+  --concrete-rgb: 243 242 238;
+  --concrete-mid-rgb: 229 227 220;
+  --concrete-dark-rgb: 214 211 200;
+
+  /* Safety / Oxide Ochre: primary CTAs, active highlights, badges */
+  --color-ochre-light: #ea8a2a;
+  --color-ochre: #d97316;
+  --color-ochre-dark: #b85d0d;
+  --ochre-light-rgb: 234 138 42;
+  --ochre-rgb: 217 115 22;
+  --ochre-dark-rgb: 184 93 13;
+
+  /* Blueprint Slate: engineered panels, technical trust cards */
+  --color-blueprint-light: #344658;
+  --color-blueprint: #243342;
+  --color-blueprint-dark: #1a2530;
+  --blueprint-light-rgb: 52 70 88;
+  --blueprint-rgb: 36 51 66;
+  --blueprint-dark-rgb: 26 37 48;
+
+  /* Mortar Grey: drafting annotations, rebar specs, secondary copy */
+  --color-mortar-light: #8c96a0;
+  --color-mortar: #66707a;
+  --color-mortar-dark: #4b535b;
+  --mortar-light-rgb: 140 150 160;
+  --mortar-rgb: 102 112 122;
+  --mortar-dark-rgb: 75 83 91;
+
+  /* Crisp White */
+  --color-white: #ffffff;
+  --white-rgb: 255 255 255;
+
+  /* -------------------------------------------------------------------------
+   * 2. TYPOGRAPHY
+   * ------------------------------------------------------------------------- */
+  --font-display: 'Archivo', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* -------------------------------------------------------------------------
+   * 3. CONTAINERS & SPACING
+   * ------------------------------------------------------------------------- */
+  --container-site: 84rem;
+  --container-pad-x: 1.5rem;
+  --container-pad-x-md: 2.5rem;
+  --section-pad-y: 6rem;
+  --section-pad-y-lg: 8.5rem;
+
+  /* -------------------------------------------------------------------------
+   * 4. GEOMETRY & MOTION
+   * ------------------------------------------------------------------------- */
+  --radius-btn: 0px; /* Precise, architectural edges */
+  --transition-site: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -11,32 +89,77 @@
   }
 
   body {
-    @apply bg-bone text-ink font-sans;
+    @apply bg-concrete text-steel font-sans;
   }
 
   ::selection {
-    @apply bg-bronze text-white;
+    @apply bg-ochre text-white;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
+  /* Headings: structural, authoritative, balanced */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-steel font-bold tracking-tight;
     text-wrap: balance;
+  }
+
+  h1 {
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    letter-spacing: -0.015em;
+  }
+
+  /* Links */
+  a {
+    transition: color 0.3s ease;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid rgb(var(--ochre-rgb));
+    outline-offset: 3px;
   }
 }
 
 @layer components {
+  /* Site Layout Container */
   .wrap {
-    @apply mx-auto w-full max-w-site px-6 md:px-10;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: var(--container-site);
+    padding-left: var(--container-pad-x);
+    padding-right: var(--container-pad-x);
   }
 
+  @media (min-width: 768px) {
+    .wrap {
+      padding-left: var(--container-pad-x-md);
+      padding-right: var(--container-pad-x-md);
+    }
+  }
+
+  /* Section Vertical Spacing */
   .section {
-    @apply py-24 md:py-32 lg:py-36;
+    padding-top: var(--section-pad-y);
+    padding-bottom: var(--section-pad-y);
   }
 
+  @media (min-width: 1024px) {
+    .section {
+      padding-top: var(--section-pad-y-lg);
+      padding-bottom: var(--section-pad-y-lg);
+    }
+  }
+
+  /* Eyebrows & Structural Accents */
   .eyebrow {
-    @apply font-display text-[11px] font-semibold uppercase tracking-widest3 text-bronze;
+    @apply font-display text-[11px] font-semibold uppercase tracking-widest3 text-ochre;
   }
 
   .eyebrow-rule {
@@ -45,52 +168,80 @@
 
   .eyebrow-rule::before {
     content: '';
-    @apply h-px w-10 bg-bronze;
+    @apply h-px w-10 bg-ochre;
   }
 
+  /* Display Typography Hierarchy */
   .headline-xl {
-    @apply font-display text-5xl font-bold leading-[0.98] tracking-[-0.02em] md:text-7xl lg:text-[5.5rem];
+    @apply font-display text-5xl font-bold leading-[0.98] tracking-[-0.025em] md:text-7xl lg:text-[5.5rem];
   }
 
   .headline-lg {
-    @apply font-display text-4xl font-bold leading-[1.02] tracking-[-0.015em] md:text-6xl lg:text-[4.25rem];
+    @apply font-display text-4xl font-bold leading-[1.02] tracking-[-0.02em] md:text-6xl lg:text-[4.25rem];
   }
 
   .headline-md {
-    @apply font-display text-3xl font-bold leading-[1.05] tracking-[-0.01em] md:text-5xl;
+    @apply font-display text-3xl font-bold leading-[1.05] tracking-[-0.015em] md:text-5xl;
   }
 
-  .btn {
-    @apply font-display inline-flex min-h-[3.25rem] items-center justify-center gap-3 px-9 text-[13px] font-semibold uppercase tracking-widest2 transition-colors duration-500 ease-site;
+  /* -------------------------------------------------------------------------
+   * BUTTONS: Architectural, tactile, solid geometric precision
+   * ------------------------------------------------------------------------- */
+  .btn,
+  button.btn {
+    @apply font-display inline-flex min-h-[3.25rem] items-center justify-center gap-3 px-8 text-[12px] font-semibold uppercase tracking-widest2 transition-all duration-300;
+    border-radius: var(--radius-btn);
   }
 
-  .btn-dark {
-    @apply btn bg-ink text-bone hover:bg-bronze;
+  .btn:active,
+  button.btn:active {
+    transform: translateY(1px);
   }
 
+  /* Primary Quote & Action Button: Safety Ochre */
+  .btn-primary,
+  .btn-ochre,
   .btn-bronze {
-    @apply btn bg-bronze text-white hover:bg-bone hover:text-ink;
+    @apply btn bg-ochre text-white hover:bg-steel hover:text-white shadow-sm;
   }
 
+  /* Dark Button: Structural Steel */
+  .btn-dark {
+    @apply btn bg-steel text-concrete hover:bg-ochre hover:text-white;
+  }
+
+  /* Translucent Light Button: For dark hero & site overlays */
   .btn-light {
-    @apply btn border border-white/25 text-white hover:border-white hover:bg-white hover:text-ink;
+    @apply btn border border-white/25 text-white hover:border-white hover:bg-white hover:text-steel;
   }
 
+  /* Ghost Button: Concrete / Steel border */
   .btn-ghost {
-    @apply btn border border-ink/20 text-ink hover:border-ink hover:bg-ink hover:text-bone;
+    @apply btn border border-steel/20 text-steel hover:border-steel hover:bg-steel hover:text-concrete;
   }
 
+  /* -------------------------------------------------------------------------
+   * LINKS: Crisp architectural underline transitions
+   * ------------------------------------------------------------------------- */
   .nav-link {
     @apply relative text-[13px] font-medium tracking-wide transition-colors duration-300;
   }
 
   .nav-link::after {
     content: '';
-    @apply absolute -bottom-1.5 left-0 h-px w-0 bg-bronze transition-all duration-500 ease-site;
+    @apply absolute -bottom-1.5 left-0 h-[2px] w-0 bg-ochre transition-all duration-300;
   }
 
   .nav-link:hover::after {
     @apply w-full;
+  }
+
+  /* CAD Blueprint Grid Pattern for Technical Accents */
+  .blueprint-grid {
+    background-image: 
+      linear-gradient(to right, rgba(36, 51, 66, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(36, 51, 66, 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 }
 

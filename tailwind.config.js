@@ -1,47 +1,93 @@
 /** @type {import('tailwindcss').Config} */
+function withOpacity(variableName) {
+  return ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `rgb(var(${variableName}) / ${opacityValue})`;
+    }
+    return `rgb(var(${variableName}))`;
+  };
+}
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
+        // Modern construction tokens
+        steel: {
+          DEFAULT: withOpacity('--steel-900-rgb'),
+          950: withOpacity('--steel-950-rgb'),
+          900: withOpacity('--steel-900-rgb'),
+          800: withOpacity('--steel-800-rgb'),
+          700: withOpacity('--steel-700-rgb'),
+          600: withOpacity('--steel-600-rgb'),
+        },
+        concrete: {
+          DEFAULT: withOpacity('--concrete-rgb'),
+          light: withOpacity('--concrete-light-rgb'),
+          mid: withOpacity('--concrete-mid-rgb'),
+          dark: withOpacity('--concrete-dark-rgb'),
+        },
+        ochre: {
+          DEFAULT: withOpacity('--ochre-rgb'),
+          light: withOpacity('--ochre-light-rgb'),
+          dark: withOpacity('--ochre-dark-rgb'),
+        },
+        blueprint: {
+          DEFAULT: withOpacity('--blueprint-rgb'),
+          light: withOpacity('--blueprint-light-rgb'),
+          dark: withOpacity('--blueprint-dark-rgb'),
+        },
+        mortar: {
+          DEFAULT: withOpacity('--mortar-rgb'),
+          light: withOpacity('--mortar-light-rgb'),
+          dark: withOpacity('--mortar-dark-rgb'),
+        },
+
+        // Backward-compatible semantic aliases mapped to variables
         ink: {
-          DEFAULT: '#111111',
-          900: '#111111',
-          800: '#1A1A1A',
-          700: '#242424',
-          600: '#2E2E2E',
+          DEFAULT: withOpacity('--steel-900-rgb'),
+          900: withOpacity('--steel-900-rgb'),
+          800: withOpacity('--steel-800-rgb'),
+          700: withOpacity('--steel-700-rgb'),
+          600: withOpacity('--steel-600-rgb'),
         },
         bone: {
-          DEFAULT: '#F5F4F0',
-          dark: '#EAE8E1',
-          mid: '#DDDBD2',
-        },
-        white: '#FFFFFF',
-        stone: {
-          DEFAULT: '#8A8A8A',
-          light: '#A3A3A3',
-          dark: '#6E6E6E',
+          DEFAULT: withOpacity('--concrete-rgb'),
+          light: withOpacity('--concrete-light-rgb'),
+          mid: withOpacity('--concrete-mid-rgb'),
+          dark: withOpacity('--concrete-dark-rgb'),
         },
         bronze: {
-          DEFAULT: '#BFA15F',
-          light: '#D4BA7D',
-          dark: '#9E8245',
+          DEFAULT: withOpacity('--ochre-rgb'),
+          light: withOpacity('--ochre-light-rgb'),
+          dark: withOpacity('--ochre-dark-rgb'),
         },
+        stone: {
+          DEFAULT: withOpacity('--mortar-rgb'),
+          light: withOpacity('--mortar-light-rgb'),
+          dark: withOpacity('--mortar-dark-rgb'),
+        },
+        white: withOpacity('--white-rgb'),
       },
       fontFamily: {
-        display: ['Archivo', 'system-ui', 'sans-serif'],
-        serif: ['Fraunces', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)'],
+        sans: ['var(--font-sans)'],
+        serif: ['var(--font-serif)'],
+        mono: ['var(--font-mono)'],
       },
       letterSpacing: {
         widest2: '0.22em',
         widest3: '0.3em',
       },
       maxWidth: {
-        site: '84rem',
+        site: 'var(--container-site)',
+      },
+      borderRadius: {
+        btn: 'var(--radius-btn)',
       },
       transitionTimingFunction: {
-        site: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        site: 'var(--transition-site)',
       },
     },
   },
